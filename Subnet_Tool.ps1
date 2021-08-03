@@ -4,11 +4,19 @@ class Subnet {
 
     [string] $address;
     
-    [int] $mask;
+    [int] $cidr;
+
+    [string] SubnetMask()
+        {
+            $binary_zeros = '0' * (32 - $this.cidr)
+            $binary_ones = '1' * $this.cidr
+            $subnet_mask = $binary_ones + $binary_zeros
+            return $subnet_mask
+        }  
 
     [string] BinaryAddress()
         {
-            $split_address = $this.address.split(".")
+            $split_address = $this.address.split('.')
             $binary_number_list = @()
             foreach($split_number in $split_address)
             {
